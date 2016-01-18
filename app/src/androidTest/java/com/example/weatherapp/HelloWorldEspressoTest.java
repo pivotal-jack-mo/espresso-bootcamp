@@ -1,5 +1,6 @@
 package com.example.weatherapp;
 
+import android.os.SystemClock;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -26,8 +27,7 @@ public class HelloWorldEspressoTest {
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
     @Test
-    public void listGoesOverTheFold() {
-        onView(withText("Today")).check(matches(isDisplayed()));
+    public void sleep() {
+        SystemClock.sleep(20000);
     }
 }
-

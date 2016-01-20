@@ -1,5 +1,8 @@
 package com.example.weatherapp;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
@@ -12,11 +15,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.swipeDown;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
@@ -24,7 +31,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.hasToString;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 
 
 /**
@@ -32,7 +44,8 @@ import static org.hamcrest.Matchers.is;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class HelloWorldEspressoTest {
+public class HelloWorldEspressoTest{
+
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
     String location = "Toronto,US";
@@ -48,7 +61,7 @@ public class HelloWorldEspressoTest {
 //    public void forecastPreference() {
 //        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
 //        onView(withText(R.string.action_settings)).perform(click());
-//        onView(withText(R.string.preference_title)).check(matches(withText("Forecast Preference")));
+//        onView(withText(R.string.preference_title)).check(matches(isDisplayed()));
 //    }
 //
 //    //Task 2
@@ -57,16 +70,28 @@ public class HelloWorldEspressoTest {
 //        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
 //        onView(withText(R.string.action_settings)).perform(click());
 //        onView(withText(R.string.preference_zip_title)).perform(click());
-//        onView(allOf(withClassName(endsWith("EditText")), withText(R.string.preference_zip_default))).perform(replaceText(location));
+//        onView(withId(android.R.id.edit)).perform(clearText()).perform(typeText(location));
 //        onView(withText("OK")).perform(click());
-//        onView(withText(location)).check(matches(withText(location)));
+//        onView(withText(location)).check(matches(isDisplayed()));
 //    }
 
     //Task 3
+//    @Test
+//    public void refresh() {
+//        onView(withId(R.id.refresh_layout)).perform(swipeDown());
+//        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText(location))).check(matches(isDisplayed()));
+//    }
+//
+
+    //Task 4
     @Test
-    public void refresh() {
-        onView(withId(R.id.refresh_layout)).perform(swipeDown());
-        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText(location)))
-                .check(matches(isDisplayed()));
+    public void changeTempUnits() {
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+        onView(withText(R.string.action_settings)).perform(click());
+        onView(withText("Temperature Units")).perform(click());
+        String tempUnit = mActivityRule.getActivity().getString(R.string.units_imperial);
+        onData(hasToString(tempUnit)).perform(click());
     }
+
+
 }

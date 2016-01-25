@@ -32,7 +32,7 @@ Software:
 #####Description:
 
 Using the links above set up an androidTest directory and add your first test.
-Notice that the app crashes right away. Think about what you did that could cause the problem.
+If you addded a contrib library you might have noticed that the app crashed right away. Fix that. You will need that library.
 
 ## Task #1: Exploring Espresso API
 
@@ -94,6 +94,12 @@ Making assertions with onData will automatically scroll to the view if it's not 
 Before starting the test investigate what kind of data the adapter holds in the unit selection dialog. You can write a failing test that will show you data type in the exception log.
 
 ##  Task #5: CursorAdapters and onData part 2:
+
+##### Disclaimer:
+
+The app does not and will not use ListViews. But there are a lot of apps out there that are still using ListViews. Understanding the concept of onData will be your introduction to the world of  adapters.
+
+This task is important from the learning point of view, but if you are frustrated that you can't see the results feel free to skip this one and ask for a solution from those who have done it.
 
 ##### Useful  material and links: 
 
@@ -162,7 +168,7 @@ Your activity after the setup must look identical to a normal activity that was 
 
 ## Refactoring time.
 
-Sit back and read Android Style Guide(ask for the link if you don't have it). Once you fully grasped the idea, refactor your tests so they look like first class tests written by Espresso master.
+Sit back and read [Espresso Style Guide](https://github.com/pivotal-vladimir/espresso-bootcamp/wiki/Espresso-Style-guide). Once you fully grasped the idea, refactor your tests so they look like first class tests written by Espresso master.
 
 #Espresso Advanced. Dependency Injections. Network synchronization. Fake data. 		
 
@@ -195,6 +201,8 @@ Don't add any dependencies for now. Just add your module on top of the existing 
 This is the right time to use a test module to your advantage.
 You tests should pass 100% of the runs.
 
+Using AsyncTask for this task is considered to be a hacky, but an easy solution. To become an Espresso Jedi you need to implement an IdlingResource interface.
+
 ## Task #12:MockWebServer
 #####Useful  material and links: 
 
@@ -208,5 +216,4 @@ You tests should pass 100% of the runs.
 3. Add a test that tests server unavailable error
 
 #####Description:
-Responses need to be built out using GSON library.
-
+Responses need to be built out using GSON library. Don't include raw json in your tests.

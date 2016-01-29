@@ -98,9 +98,9 @@ public class HelloWorldEspressoTest{
     //Task 5
     @Ignore
     public void todaysForcast() {
-        Calendar date = Calendar.getInstance();
-        int day = date.get(Calendar.DATE);
-        onData(withRowDouble(WeatherContract.WeatherEntry.COLUMN_DATE, day)).perform(click());
+        Calendar calendar = Calendar.getInstance();
+        int date = calendar.get(Calendar.DATE);
+        onData(withRowDouble(WeatherContract.WeatherEntry.COLUMN_DATE, date)).perform(click());
     }
 
     //Task 6

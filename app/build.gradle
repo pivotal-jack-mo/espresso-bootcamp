@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -42,6 +41,7 @@ dependencies {
     compile 'joda-time:joda-time:2.8.2'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup.dagger:dagger:1.2.2'
+<<<<<<< HEAD
     apt 'com.squareup.dagger:dagger-compiler:1.2.2'
 
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
@@ -56,3 +56,7 @@ dependencies {
         exclude module: 'recyclerview-v7'
     }
 }
+=======
+    compile 'com.squareup.dagger:dagger-compiler:1.2.2'
+}
+>>>>>>> pivotal-vladimir/master

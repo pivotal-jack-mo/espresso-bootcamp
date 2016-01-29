@@ -13,6 +13,7 @@ public class WeatherAppApplication extends Application {
         super.onCreate();
         application = this;
         objectGraph = ObjectGraph.create(getModules());
+        inject(this);
     }
 
     protected Object[] getModules() {

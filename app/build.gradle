@@ -8,6 +8,7 @@ android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
+
     defaultConfig {
         applicationId "com.example.weatherapp"
         minSdkVersion 16

@@ -46,8 +46,8 @@ public class IntenseIntents {
         intending(not(isInternal())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
     }
 
-    @Test
     //Task 8
+    @Test
     public void sendLocation() {
         SharedPreferences preferences = mActivityRule.getActivity().getSharedPreferences("Mypref", 0);
         preferences.edit().clear().commit();

@@ -1,27 +1,25 @@
 package com.example.weatherapp;
 
-import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.SystemClock;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
-import android.view.View;
 
 import com.example.weatherapp.activities.DetailsActivity;
-import com.example.weatherapp.activities.MainActivity;
 import com.example.weatherapp.data.WeatherContract;
+import com.example.weatherapp.services.WeatherService;
 
-import org.junit.Before;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
+
 import static android.support.test.InstrumentationRegistry.getContext;
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 
 /**
@@ -36,16 +34,26 @@ public class CoolActivities {
 
     //Task 9
     @Test
-    public void customIntentToStartActivity() {
-        WeatherAppSharedPrefs sharedPrefs = new WeatherAppSharedPrefs(getTargetContext());
-        Instrumentation.ActivityMonitor monitor =  getInstrumentation().addMonitor(DetailsActivity.class.getName(), null, false);
-        Activity currentActivity = getInstrumentation().waitForMonitorWithTimeout(monitor, 5);
-        View v = currentActivity.findViewById(R.id.recyclerview_forecast);
-        int columnIndex = v.getCursor().getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATE);
-        Uri weatherUri = WeatherContract.buildWeatherLocationWithDate(sharedPrefs.getLocationPrefs(), getCursor().getLong(columnIndex));
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setData(weatherUri);
-        mActivityRule.launchActivity(intent);
-    }
+    public void detailActivity() {
 
+        WeatherAppSharedPrefs sharedPrefs = new WeatherAppSharedPrefs(getTargetContext());
+        getTargetContext().getSharedPreferences("com.example.weatherapp_preferences", 0).edit().clear().commit();
+        sharedPrefs.setLocationPrefs("Toronto,CA");
+
+        Calendar calendar = Calendar.getInstance();
+        long date = calendar.get(Calendar.DATE);
+        Uri weatherUri = WeatherContract.buildWeatherLocationWithDate(sharedPrefs.getLocationPrefs(), date);
+
+        Intent intent = new Intent(getTargetContext(), DetailsActivity.class);
+        intent.setData(weatherUri);
+        intent.putExtra(WeatherService.LOCATION_SETTING_EXTRA, sharedPrefs.getLocationPrefs());
+        mActivityRule.launchActivity(intent);
+
+        intent = new Intent(getContext(), WeatherService.class);
+        intent.putExtra(WeatherService.LOCATION_SETTING_EXTRA, sharedPrefs.getLocationPrefs());
+        getTargetContext().startService(intent);
+
+
+        SystemClock.sleep(8000);
+    }
 }

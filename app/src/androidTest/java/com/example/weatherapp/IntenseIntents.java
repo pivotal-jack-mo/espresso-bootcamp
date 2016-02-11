@@ -17,6 +17,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -36,6 +37,7 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class IntenseIntents {
+
     @Rule
     public IntentsTestRule<MainActivity> mActivityRule = new IntentsTestRule<>(MainActivity.class);
 
@@ -49,8 +51,7 @@ public class IntenseIntents {
     //Task 8
     @Test
     public void sendLocation() {
-        SharedPreferences preferences = mActivityRule.getActivity().getSharedPreferences("Mypref", 0);
-        preferences.edit().clear().commit();
+        getTargetContext().getSharedPreferences("com.example.weatherapp_preferences", 0).edit().clear().commit();
 
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(R.string.action_map)).perform(click());

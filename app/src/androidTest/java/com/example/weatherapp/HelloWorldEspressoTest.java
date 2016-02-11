@@ -50,7 +50,6 @@ public class HelloWorldEspressoTest{
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
-    String location = "Toronto,US";
 
     //Task 0
     @Test
@@ -69,6 +68,7 @@ public class HelloWorldEspressoTest{
     //Task 2
     @Test
     public void changeLocation() {
+        String location = "Toronto,US";
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(R.string.action_settings)).perform(click());
         onView(withText(R.string.preference_zip_title)).perform(click());
@@ -81,7 +81,7 @@ public class HelloWorldEspressoTest{
     @Test
     public void refresh() {
         onView(withId(R.id.refresh_layout)).perform(swipeDown());
-        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText(location))).check(matches(isDisplayed()));
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText(R.string.preference_zip_default))).check(matches(isDisplayed()));
     }
 
 

@@ -140,7 +140,7 @@ This functionality is not available in the Espresso framework and will require a
 Prettify the output of the matcher's description.
 Notice that this test is flaky as well. Implementation of the custom idling resource (task #11) will make this test more stable.
 
-##Task #8: External intents, Independent tests and first injection.
+##Task #8: External intents, Independent tests and first encounter with dependency injections.
 
 ##### Useful  material and links: 
 [Espresso intents] (https://google.github.io/android-testing-support-library/docs/espresso/intents/)
@@ -149,9 +149,9 @@ Notice that this test is flaky as well. Implementation of the custom idling reso
 Write a test that verifies that correct location data is being sent to a map when Map is selected from the overflow menu.
 
 #####Description:
-To make this test independent make sure to clear the shared preference storage beforehand. Your test should be checking for a default location value.
+To make this test independent make sure to clear the shared preference storage before the test starts. Your test should be checking for a default location value.
 
-Before implemention your own solution take a look at the production application. Find how the data is stored and which class is used to read and write this data. Inject this class into your test and use it for your advantage.
+Before implemention your own solution take a look at the production application. Find how the data is stored and which class is used to read and write this data. Notice the injection pattern that is used throughtout the app. You won't be able to use it up until you implement your own module. For now instantiate the helper class every time you need to use it.
 
 ##Task #9: Launching into different activities
 ##### Useful  material and links: 
@@ -182,6 +182,7 @@ Sit back and read [Espresso Style Guide](https://github.com/pivotal-vladimir/esp
 
 1. Create a testmodule with custom dependencies for espresso tests
 2. Implement a custom test runner and use it to initiate dependencies
+3. Use injection of a helper class from task #8
 
 #####Description:
 Learn how the production app initiates dependencies.

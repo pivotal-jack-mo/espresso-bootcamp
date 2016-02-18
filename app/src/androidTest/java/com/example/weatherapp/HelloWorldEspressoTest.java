@@ -12,6 +12,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.example.weatherapp.activities.MainActivity;
 import com.example.weatherapp.data.WeatherContract;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,6 +23,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -51,10 +53,17 @@ public class HelloWorldEspressoTest{
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
+    @Before
+    public void setUp() {
+        WeatherAppSharedPrefs sharedPrefs = new WeatherAppSharedPrefs(getTargetContext());
+        getTargetContext().getSharedPreferences("com.example.weatherapp_preferences", 0).edit().clear().commit();
+        sharedPrefs.setLocationPrefs("Toronto,CA");
+    }
+
     //Task 0
     @Test
     public void sleep() {
-        SystemClock.sleep(20000);
+        SystemClock.sleep(10000);
     }
 
     //Task 1
@@ -81,7 +90,7 @@ public class HelloWorldEspressoTest{
     @Test
     public void refresh() {
         onView(withId(R.id.refresh_layout)).perform(swipeDown());
-        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText(R.string.preference_zip_default))).check(matches(isDisplayed()));
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("Toronto,CA"))).check(matches(isDisplayed()));
     }
 
 

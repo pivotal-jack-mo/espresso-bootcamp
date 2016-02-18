@@ -17,10 +17,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-
 import static android.support.test.InstrumentationRegistry.getContext;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Created by pivotal on 2016-01-29.
@@ -40,9 +42,8 @@ public class CoolActivities {
         getTargetContext().getSharedPreferences("com.example.weatherapp_preferences", 0).edit().clear().commit();
         sharedPrefs.setLocationPrefs("Toronto,CA");
 
-        Calendar calendar = Calendar.getInstance();
-        long date = calendar.get(Calendar.DATE);
-        Uri weatherUri = WeatherContract.buildWeatherLocationWithDate(sharedPrefs.getLocationPrefs(), date);
+        long currentDay = new DateTime().withZone(DateTimeZone.getDefault()).withTimeAtStartOfDay().getMillis();
+        Uri weatherUri = WeatherContract.buildWeatherLocationWithDate(sharedPrefs.getLocationPrefs(), currentDay);
 
         Intent intent = new Intent(getTargetContext(), DetailsActivity.class);
         intent.setData(weatherUri);
@@ -53,7 +54,8 @@ public class CoolActivities {
         intent.putExtra(WeatherService.LOCATION_SETTING_EXTRA, sharedPrefs.getLocationPrefs());
         getTargetContext().startService(intent);
 
-
         SystemClock.sleep(8000);
+
+        onView(withId(R.id.detail_day_textview)).check(matches(isDisplayed()));
     }
 }

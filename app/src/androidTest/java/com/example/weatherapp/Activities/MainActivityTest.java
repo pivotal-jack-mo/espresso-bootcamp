@@ -1,14 +1,17 @@
-package com.example.weatherapp;
+package com.example.weatherapp.Activities;
 
 
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.example.weatherapp.R;
+import com.example.weatherapp.WeatherAppSharedPrefs;
 import com.example.weatherapp.activities.MainActivity;
 import com.example.weatherapp.data.WeatherContract;
 
@@ -48,7 +51,7 @@ import static org.hamcrest.Matchers.hasToString;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class HelloWorldEspressoTest{
+public class MainActivityTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
@@ -68,9 +71,9 @@ public class HelloWorldEspressoTest{
 
     //Task 1
     @Test
-    public void forecastPreference() {
+    public void checkForecastPreference() {
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText(R.string.action_settings)).perform(click());
+        onView(ViewMatchers.withText(R.string.action_settings)).perform(click());
         onView(withText(R.string.preference_title)).check(matches(isDisplayed()));
     }
 
@@ -88,7 +91,7 @@ public class HelloWorldEspressoTest{
 
     //Task 3
     @Test
-    public void refresh() {
+    public void refreshAndCheckSnackBar() {
         onView(withId(R.id.refresh_layout)).perform(swipeDown());
         onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("Toronto,CA"))).check(matches(isDisplayed()));
     }

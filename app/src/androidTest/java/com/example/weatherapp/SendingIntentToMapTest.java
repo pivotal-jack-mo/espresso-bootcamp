@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.not;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class IntenseIntents {
+public class SendingIntentToMapTest {
 
     @Rule
     public IntentsTestRule<MainActivity> mActivityRule = new IntentsTestRule<>(MainActivity.class);

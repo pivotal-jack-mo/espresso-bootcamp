@@ -75,7 +75,7 @@ public class WeatherService extends IntentService {
         handleSuccess();
     }
 
-    private void addWeatherIntoTheDatabase(long locationId, ArrayList<ForecastList> forecastList) {
+    public void addWeatherIntoTheDatabase(long locationId, ArrayList<ForecastList> forecastList) {
         Uri uri = WeatherContract.WeatherEntry.CONTENT_URI;
         String selection = WeatherContract.WeatherEntry.COLUMN_LOC_KEY + "=?";
         String[] selectionArgs = new String[]{String.valueOf(locationId)};
@@ -108,7 +108,7 @@ public class WeatherService extends IntentService {
                 .bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, forecastValues.toArray(new ContentValues[forecastValues.size()]));
     }
 
-    private Long addLocationToTheDatabase(String city, String country, String locationSetting, double lat, double lon) {
+    public Long addLocationToTheDatabase(String city, String country, String locationSetting, double lat, double lon) {
         Long locationId;
         Uri uri = WeatherContract.LocationEntry.CONTENT_URI;
         String[] projection = new String[]{WeatherContract.LocationEntry.TABLE_NAME + "." + WeatherContract.LocationEntry._ID};
